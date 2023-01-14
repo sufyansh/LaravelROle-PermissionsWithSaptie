@@ -8,7 +8,9 @@
             <h2>Users Management</h2>
         </div>
         <div class="pull-right">
+          @can('user-create')
             <a class="btn btn-success" href="{{ route('users.create') }}"> Create New User</a>
+            @endcan
         </div>
     </div>
 </div>
@@ -41,19 +43,25 @@
         @endforeach
       @endif
     </td>
-    <td>
+    <td>@can('user-list')
        <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
+       @endcan
+       @can('user-edit')
        <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
+       @endcan
+       @can('role-edit')
         {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
             {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+
         {!! Form::close() !!}
+        @endcan
     </td>
   </tr>
  @endforeach
 </table>
 
 
-{{-- {!! $data->render() !!} --}}
+{!! $data->links() !!}
 
 
 <p class="text-center text-primary"><small>Tutorial by ItSolutionStuff.com</small></p>
